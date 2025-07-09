@@ -1,0 +1,78 @@
+body {
+  background: #f7fafc;
+  font-family: 'Inter', Arial, sans-serif;
+  margin: 0;
+  color: #222;
+}
+
+.main-card {
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 2px 16px 0 rgba(0,0,0,0.06);
+  padding: 2rem;
+  max-width: 600px;
+  margin: 2rem auto;
+}
+
+.form-field {
+  margin-bottom: 1.25rem;
+  border-radius: 0.5rem;
+  background: #f9f9f9;
+}
+
+.bold-header {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1976d2;
+  margin-bottom: 1.5rem;
+}
+
+.primary-btn {
+  background: #1976d2;
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.75rem 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 1.5rem;
+  width: 100%;
+  transition: background 0.2s;
+}
+.primary-btn:hover {
+  background: #125ea2;
+}
+
+.secondary-btn {
+  background: #fff;
+  color: #1976d2;
+  border: 2px solid #1976d2;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.secondary-btn:hover {
+  background: #1976d2;
+  color: #fff;
+}
+
+.result-card {
+  background: #f9f9f9;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 6px 0 rgba(0,0,0,0.04);
+  margin-bottom: 1.5rem;
+  padding: 1.25rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@media (max-width: 700px) {
+  .main-card {
+    padding: 1rem;
+    max-width: 98vw;
+  }
+} 

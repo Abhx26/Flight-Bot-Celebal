@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Box, Typography, TextField, Button, Paper } from '@mui/material';
+import { Typography, TextField } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import api, { setAuthToken } from '../api';
+import '../App.css';
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
 
@@ -20,16 +21,13 @@ function BookingForm({ flight }) {
     setLoading(true);
     setError('');
     try {
-      // 1. Create booking (pending payment)
       const token = localStorage.getItem('token');
       setAuthToken(token);
       const bookingRes = await api.post('/bookings', { flight, itinerary: {}, paymentStatus: 'pending' });
       const bookingId = bookingRes.data._id;
-      // 2. Create payment intent
-      const amount = Math.round(Number(flight.price.total) * 100); // Stripe expects cents
+      const amount = Math.round(Number(flight.price.total) * 100);
       const paymentRes = await api.post('/payment/create-intent', { amount, currency: flight.price.currency });
       const clientSecret = paymentRes.data.clientSecret;
-      // 3. Confirm card payment
       const cardElement = elements.getElement(CardElement);
       const paymentResult = await stripe.confirmCardPayment(clientSecret, {
         payment_method: {
@@ -38,7 +36,6 @@ function BookingForm({ flight }) {
         },
       });
       if (paymentResult.error) throw new Error(paymentResult.error.message);
-      // 4. Update booking payment status
       await api.patch(`/bookings/${bookingId}/payment`, { paymentStatus: 'paid' });
       navigate('/bookings');
     } catch (err) {
@@ -48,16 +45,18 @@ function BookingForm({ flight }) {
   };
 
   return (
-    <Paper sx={{ p: 3, maxWidth: 500, mx: 'auto' }}>
-      <Typography variant="h6">Book Flight</Typography>
-      <Typography variant="body2" mb={2}>{`From ${flight.itineraries[0].segments[0].departure.iataCode} to ${flight.itineraries[0].segments.slice(-1)[0].arrival.iataCode}`}</Typography>
-      <Typography variant="body2" mb={2}>{`Price: ${flight.price.total} ${flight.price.currency}`}</Typography>
-      <TextField label="Name" fullWidth margin="normal" value={name} onChange={e => setName(e.target.value)} />
-      <TextField label="Email" fullWidth margin="normal" value={email} onChange={e => setEmail(e.target.value)} />
-      <CardElement options={{ style: { base: { fontSize: '16px' } } }} />
-      {error && <Typography color="error">{error}</Typography>}
-      <Button variant="contained" fullWidth sx={{ mt: 2 }} onClick={handleBook} disabled={loading}>Pay & Book</Button>
-    </Paper>
+    <div className="main-card">
+      <div className="bold-header">Book Flight</div>
+      <Typography variant="body2" style={{ marginBottom: 12 }}>{`From ${flight.itineraries[0].segments[0].departure.iataCode} to ${flight.itineraries[0].segments.slice(-1)[0].arrival.iataCode}`}</Typography>
+      <Typography variant="body2" style={{ marginBottom: 18 }}>{`Price: ${flight.price.total} ${flight.price.currency}`}</Typography>
+      <TextField label="Name" fullWidth margin="normal" value={name} onChange={e => setName(e.target.value)} className="form-field" />
+      <TextField label="Email" fullWidth margin="normal" value={email} onChange={e => setEmail(e.target.value)} className="form-field" />
+      <div className="form-field" style={{ background: '#fff', padding: 12, border: '1px solid #eee' }}>
+        <CardElement options={{ style: { base: { fontSize: '16px' } } }} />
+      </div>
+      {error && <Typography color="error" style={{ marginBottom: 16 }}>{error}</Typography>}
+      <button className="primary-btn" onClick={handleBook} disabled={loading}>Pay & Book</button>
+    </div>
   );
 }
 

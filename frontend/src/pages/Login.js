@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { TextField, Button, Typography, Box } from '@mui/material';
+import { TextField, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import api, { setAuthToken } from '../api';
+import '../App.css';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -21,13 +22,13 @@ function Login() {
   };
 
   return (
-    <Box maxWidth={400} mx="auto">
-      <Typography variant="h5" mb={2}>Login</Typography>
-      <TextField label="Email" fullWidth margin="normal" value={email} onChange={e => setEmail(e.target.value)} />
-      <TextField label="Password" type="password" fullWidth margin="normal" value={password} onChange={e => setPassword(e.target.value)} />
-      {error && <Typography color="error">{error}</Typography>}
-      <Button variant="contained" fullWidth onClick={handleLogin} sx={{ mt: 2 }}>Login</Button>
-    </Box>
+    <div className="main-card">
+      <div className="bold-header">Login</div>
+      <TextField label="Email" fullWidth margin="normal" value={email} onChange={e => setEmail(e.target.value)} className="form-field" />
+      <TextField label="Password" type="password" fullWidth margin="normal" value={password} onChange={e => setPassword(e.target.value)} className="form-field" />
+      {error && <Typography color="error" style={{ marginBottom: 16 }}>{error}</Typography>}
+      <button className="primary-btn" onClick={handleLogin}>Login</button>
+    </div>
   );
 }
 

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Typography, Box, List, ListItem, ListItemText, CircularProgress } from '@mui/material';
+import { Typography, CircularProgress } from '@mui/material';
 import api, { setAuthToken } from '../api';
+import '../App.css';
 
 function Bookings() {
   const [bookings, setBookings] = useState([]);
@@ -16,21 +17,21 @@ function Bookings() {
   }, []);
 
   return (
-    <Box maxWidth={600} mx="auto">
-      <Typography variant="h5" mb={2}>My Bookings</Typography>
+    <div className="main-card">
+      <div className="bold-header">My Bookings</div>
       {loading ? <CircularProgress /> : (
-        <List>
+        <div>
           {bookings.map((booking, idx) => (
-            <ListItem key={idx} divider>
-              <ListItemText
-                primary={`Flight: ${booking.flight?.itineraries?.[0]?.segments?.[0]?.departure?.iataCode} to ${booking.flight?.itineraries?.[0]?.segments?.slice(-1)[0]?.arrival?.iataCode}`}
-                secondary={`Status: ${booking.paymentStatus}`}
-              />
-            </ListItem>
+            <div className="result-card" key={idx}>
+              <div>
+                <div style={{ fontWeight: 600 }}>{`Flight: ${booking.flight?.itineraries?.[0]?.segments?.[0]?.departure?.iataCode} to ${booking.flight?.itineraries?.[0]?.segments?.slice(-1)[0]?.arrival?.iataCode}`}</div>
+                <div style={{ color: '#666', fontSize: 15 }}>{`Status: ${booking.paymentStatus}`}</div>
+              </div>
+            </div>
           ))}
-        </List>
+        </div>
       )}
-    </Box>
+    </div>
   );
 }
 
