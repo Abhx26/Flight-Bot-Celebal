@@ -48,7 +48,7 @@ npm install
 #### b. Environment variables
 Create a `.env` file in `backend/`:
 ```
-MONGO_URI=mongodb://localhost:27017/flightapp
+MONGO_URI=your-mongo-url
 JWT_SECRET=your_jwt_secret
 STRIPE_SECRET_KEY=your_stripe_secret_key
 AMADEUS_CLIENT_ID=your_amadeus_client_id
