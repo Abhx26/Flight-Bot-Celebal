@@ -126,12 +126,7 @@ npm start
 
 ---
 
-## Customization & Deployment
-- You can deploy the frontend (Vercel/Netlify), backend (Render/Heroku/AWS), and MongoDB (Atlas).
-- Update API URLs and environment variables as needed for production.
-- Extend the bot with more intents/entities or connect to other NLP providers.
 
----
 
 ## License
 MIT 
